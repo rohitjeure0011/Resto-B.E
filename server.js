@@ -40,8 +40,8 @@ app.use("/api/auth",        require("./routes/authRoutes"));
 app.use("/api/restaurants", require("./routes/restaurantRoutes"));
 app.use("/api/menu",        require("./routes/menuRoutes"));
 app.use("/api/orders",      require("./routes/orderRoutes"));
-app.use("/api/payments",    require("./routes/paymentRoutes"));   // ← NEW
 app.use("/api/upload",      require("./routes/uploadRoutes"));
+app.use("/api/payments", require("./routes/paymentRoutes"));
 
 app.get("/", (_req, res) => res.json({ success: true, message: "Restaurant API running" }));
 
