@@ -1,6 +1,6 @@
 const express = require("express");
 const router  = express.Router();
-const upload  = require("../middleware/uploadTemp");
+const upload  = require("../middleware/uploadMiddleware");
 const { protect } = require("../middleware/authMiddleware");
 
 // POST /api/upload  → returns { url: "/uploads/filename.jpg" }
