@@ -16,9 +16,16 @@ connectDB();
 const app    = express();
 const server = http.createServer(app);
 
+// ── CORS Configuration ─────────────────────────────────────────────────────────
+const corsOptions = {
+  origin: (origin, callback) => callback(null, true),
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+};
+
 // ── Socket.io ──────────────────────────────────────────────────────────────────
 const io = new Server(server, {
-  cors: { origin: process.env.CLIENT_URL || "http://localhost:5173", methods: ["GET","POST"], credentials: true },
+  cors: corsOptions,
 });
 app.use((req, _res, next) => { req.io = io; next(); });
 
@@ -29,7 +36,7 @@ io.on("connection", (socket) => {
 });
 
 // ── Middleware ─────────────────────────────────────────────────────────────────
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173", credentials: true }));
+app.use(cors(corsOptions));
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 if (process.env.NODE_ENV !== "production") app.use(morgan("dev"));

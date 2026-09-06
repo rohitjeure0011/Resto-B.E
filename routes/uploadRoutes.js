@@ -9,7 +9,8 @@ router.post("/", protect, upload.single("image"), (req, res) => {
     return res.status(400).json({ success: false, message: "No image uploaded or invalid file type" });
 
   // Build the public URL (served by express static in server.js)
-  const url = `/uploads/${req.file.filename}`;
+  const baseUrl = process.env.API_URL || `${req.protocol}://${req.get("host")}`;
+  const url = `${baseUrl}/uploads/${req.file.filename}`;
   res.status(200).json({ success: true, url, filename: req.file.filename });
 });
 
